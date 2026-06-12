@@ -1,4 +1,83 @@
-# MoodMind AI 🪶
+# MoodMind AI
+
+MoodMind AI is a privacy-first mood journaling web app that provides AI-powered emotional insights and gentle wellness suggestions. It uses a React + Vite frontend and a FastAPI backend. When the Gemini API is unavailable (or quota is exceeded), the backend falls back to a local keyword-based analyzer so the app remains usable locally.
+
+## Features
+
+- Write daily journal entries and get an AI mood analysis
+- Local `localStorage` history (no server-side user data)
+- Dark mode with persistence
+- Gemini integration (configurable via `.env`) with robust offline fallback
+
+## Tech
+
+- Frontend: React (Vite)
+- Backend: FastAPI
+- AI: Google Gemini (via `google-generativeai`), plus a local keyword fallback
+
+## Quick Start (Local)
+
+Prerequisites:
+- Node.js (16+)
+- Python 3.10 (recommended for reproducible builds)
+
+1. Clone and open project
+
+```bash
+git clone https://github.com/sittulmishra1801/mood-mind-ai.git
+cd mood-mind-ai
+```
+
+2. Backend (Python)
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\activate
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+
+# create .env (see .env.example) and add your GEMINI_API_KEY if you have one
+```
+
+Run backend
+
+```powershell
+python -m uvicorn main:app --reload --port 8000
+```
+
+3. Frontend (Node)
+
+```bash
+npm install
+npm run dev
+# Open http://localhost:5173
+```
+
+## Environment
+
+Create a `.env` in the project root with:
+
+```
+GEMINI_API_KEY=your_key_here
+GEMINI_MODEL=gemini-2.0-flash
+FRONTEND_ORIGIN=http://localhost:5173
+```
+
+If `GEMINI_API_KEY` is not set or the API call fails, the backend uses a keyword-based fallback to return a helpful response.
+
+## CI
+
+This repository includes a GitHub Actions workflow that installs frontend and backend dependencies and builds both parts to catch dependency/build issues on PRs and pushes.
+
+## Development notes
+
+- The Vite dev server proxies `/api` to `http://localhost:8000` (see `vite.config.js`).
+- Keep the backend running while developing (two terminals).
+- The fallback analyzer is implemented in `ai_service.py` for offline testing and demos.
+
+## License
+
+MIT# MoodMind AI 🪶
 
 An AI-powered mood journaling application. Write about your day and receive instant emotional insights, personalized advice, and wellness suggestions — powered by Gemini Flash.
 
