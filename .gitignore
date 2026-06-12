@@ -10,5 +10,4 @@ build/
 .vscode/
 *.log
 *.sqlite3
-package-lock.json
 /.pytest_cache/
